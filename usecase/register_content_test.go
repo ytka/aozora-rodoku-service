@@ -144,12 +144,14 @@ func TestRegisterContentsToDB(t *testing.T) {
 	contents, err := database.FindContents(context.Background(), dbx)
 	assert.NoError(t, err)
 	assert.Equal(t, 3, len(contents))
-	assert.Equal(t, []database.Content{
-		{Id: uuid.NewMockUUID(0),
-			TitleRuby: "ああき", Title: "ア、秋", AuthorRuby: "だざいおさむ", Author: "太宰 治", SpeakerRuby: "なかむらあきよ", Speaker: "中村 昭代", FileName: "rd260.mp3", NewArrivalDate: "", Time: "6分52秒"},
-		{Id: uuid.NewMockUUID(1),
-			TitleRuby: "ああしんど", Title: "ああしんど", AuthorRuby: "いけだしょうえん", Author: "池田 焦園", SpeakerRuby: "いけどみか", Speaker: "池戸 美香", FileName: "rd158.mp3", NewArrivalDate: "", Time: "2分40秒"},
-		{Id: uuid.NewMockUUID(2),
-			TitleRuby: "ああとうきょうはくいだおれ", Title: "ああ東京は食い倒れ", AuthorRuby: "ふるかわろっぱ", Author: "古川 緑波", SpeakerRuby: "のむらようじ", Speaker: "野村 洋二", FileName: "rd164.mp3", NewArrivalDate: "2020-11-01", Time: "9分25秒"},
-	}, contents)
+
+	assert.Equal(t, "", database.DiffEntities(
+		[]database.Content{
+			{Id: uuid.NewMockUUID(0),
+				TitleRuby: "ああき", Title: "ア、秋", AuthorRuby: "だざいおさむ", Author: "太宰 治", SpeakerRuby: "なかむらあきよ", Speaker: "中村 昭代", FileName: "rd260.mp3", NewArrivalDate: "", Time: "6分52秒"},
+			{Id: uuid.NewMockUUID(1),
+				TitleRuby: "ああしんど", Title: "ああしんど", AuthorRuby: "いけだしょうえん", Author: "池田 焦園", SpeakerRuby: "いけどみか", Speaker: "池戸 美香", FileName: "rd158.mp3", NewArrivalDate: "", Time: "2分40秒"},
+			{Id: uuid.NewMockUUID(2),
+				TitleRuby: "ああとうきょうはくいだおれ", Title: "ああ東京は食い倒れ", AuthorRuby: "ふるかわろっぱ", Author: "古川 緑波", SpeakerRuby: "のむらようじ", Speaker: "野村 洋二", FileName: "rd164.mp3", NewArrivalDate: "2020-11-01", Time: "9分25秒"},
+		}, contents))
 }

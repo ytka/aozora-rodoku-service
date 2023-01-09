@@ -1,6 +1,9 @@
 
 DB=postgresql://postgres:secret@localhost:5432/aozora-rodoku?sslmode=disable
 
+test:
+	go test ./...
+
 db-apply:
 	atlas schema apply -u ${DB} --to file://db/schema.hcl
 

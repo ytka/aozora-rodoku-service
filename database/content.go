@@ -3,12 +3,15 @@ package database
 import (
 	"aozorarodoku-service/base/uuid"
 	"context"
+	"time"
 
 	"github.com/jmoiron/sqlx"
 )
 
 type Content struct {
 	Id             uuid.UUID `db:"id"`
+	CreatedAt      time.Time `db:"created_at"`
+	UpdatedAt      time.Time `db:"updated_at"`
 	TitleRuby      string    `db:"title_ruby"`
 	Title          string    `db:"title"`
 	AuthorRuby     string    `db:"author_ruby"`

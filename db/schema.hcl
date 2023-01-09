@@ -9,6 +9,16 @@ table "contents" {
     null = false
     type = uuid
   }
+  column "created_at" {
+    null = false
+    type = timestamptz
+    default = sql("CURRENT_TIMESTAMP")
+  }
+  column "updated_at" {
+    null = false
+    type = timestamptz(4)
+    default = sql("CURRENT_TIMESTAMP")
+  }
   column "title_ruby" {
     null = false
     type = text
