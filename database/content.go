@@ -1,22 +1,42 @@
 package database
 
 import (
+	"aozorarodoku-service/base/uuid"
 	"context"
 
 	"github.com/jmoiron/sqlx"
 )
 
 type Content struct {
-	Id             string `db:"id"`
-	TitleRuby      string `db:"title_ruby"`
-	Title          string `db:"title"`
-	AuthorRuby     string `db:"author_ruby"`
-	Author         string `db:"author"`
-	SpeakerRuby    string `db:"speaker_ruby"`
-	Speaker        string `db:"speaker"`
-	FileName       string `db:"file_name"`
-	NewArrivalDate string `db:"new_arrival_date"`
-	Time           string `db:"time"`
+	Id             uuid.UUID `db:"id"`
+	TitleRuby      string    `db:"title_ruby"`
+	Title          string    `db:"title"`
+	AuthorRuby     string    `db:"author_ruby"`
+	Author         string    `db:"author"`
+	SpeakerRuby    string    `db:"speaker_ruby"`
+	Speaker        string    `db:"speaker"`
+	FileName       string    `db:"file_name"`
+	NewArrivalDate string    `db:"new_arrival_date"`
+	Time           string    `db:"time"`
+}
+
+func FindContents(ctx context.Context, db *sqlx.DB) ([]Content, error) {
+	query := `SELECT * FROM contents`
+	rows, err := db.Queryx(query)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	results := make([]Content, 0)
+	for rows.Next() {
+		var c Content
+		err := rows.StructScan(&c)
+		if err != nil {
+			return nil, err
+		}
+		results = append(results, c)
+	}
+	return results, nil
 }
 
 func InsertContent(ctx context.Context, tx *sqlx.Tx, c ...Content) error {

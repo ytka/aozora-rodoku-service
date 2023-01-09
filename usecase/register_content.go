@@ -2,15 +2,15 @@ package usecase
 
 import (
 	"aozorarodoku-service/aozorarodokuweb"
+	"aozorarodoku-service/base/uuid"
 	"aozorarodoku-service/database"
 	"context"
 
-	"github.com/google/uuid"
 	"github.com/jmoiron/sqlx"
 )
 
 func csvContentToDbContent(c aozorarodokuweb.Content) (database.Content, error) {
-	return database.Content{Id: uuid.NewString(),
+	return database.Content{Id: uuid.New(),
 		TitleRuby: c.TitleRuby, Title: c.Title,
 		AuthorRuby: c.AuthorRuby, Author: c.Author,
 		SpeakerRuby: c.SpeakerRuby, Speaker: c.Speaker,
