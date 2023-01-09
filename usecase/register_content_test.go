@@ -141,7 +141,7 @@ func TestRegisterContentsToDB(t *testing.T) {
 	err := RegisterContentsToDB(context.Background(), dbx)
 	assert.NoError(t, err)
 
-	contents, err := database.FindContents(context.Background(), dbx)
+	contents, err := database.FindContents(context.Background(), dbx, "")
 	assert.NoError(t, err)
 	assert.Equal(t, 3, len(contents))
 

@@ -3,6 +3,7 @@ package database
 import (
 	"aozorarodoku-service/base/uuid"
 	"context"
+	"fmt"
 	"time"
 
 	"github.com/jmoiron/sqlx"
@@ -23,8 +24,11 @@ type Content struct {
 	Time           string    `db:"time"`
 }
 
-func FindContents(ctx context.Context, db *sqlx.DB) ([]Content, error) {
+func FindContents(ctx context.Context, db *sqlx.DB, searchText string) ([]Content, error) {
 	query := `SELECT * FROM contents`
+	if searchText != "" {
+		query += fmt.Sprintf(" WHERE author LIKE '%%%v%%'", searchText)
+	}
 	rows, err := db.Queryx(query)
 	if err != nil {
 		return nil, err

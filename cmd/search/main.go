@@ -5,12 +5,21 @@ import (
 	"aozorarodoku-service/env"
 	"aozorarodoku-service/usecase"
 	"context"
+	"fmt"
 )
 
 func main() {
 	ctx := context.Background()
+	searchText := "宮沢賢治"
 	if err := env.RunOn(ctx, func(e *env.Env) error {
-		return usecase.RegisterContentsToDB(e.Context, e.Db)
+		contents, err := usecase.SearchContents(e.Context, e.Db, searchText)
+		if err != nil {
+			return err
+		}
+		for _, v := range contents {
+			fmt.Println(v)
+		}
+		return nil
 	}); err != nil {
 		panic(err)
 	}
